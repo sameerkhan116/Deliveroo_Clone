@@ -58,6 +58,7 @@ export default {
             restaurants {
               _id
               name
+              description
               image {
                 url
               }
