@@ -1,1 +1,12 @@
-{}
+{
+  "restaurants": {
+    "attributes": {
+      "name": {
+        "appearance": ""
+      },
+      "description": {
+        "appearance": "WYSIWYG"
+      }
+    }
+  }
+}
