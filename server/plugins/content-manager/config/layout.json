@@ -21,5 +21,24 @@
         "appearance": ""
       }
     }
+  },
+  "order": {
+    "attributes": {
+      "address": {
+        "appearance": ""
+      },
+      "postalCode": {
+        "appearance": ""
+      },
+      "city": {
+        "appearance": ""
+      },
+      "dishes": {
+        "appearance": ""
+      },
+      "amount": {
+        "appearance": ""
+      }
+    }
   }
 }
