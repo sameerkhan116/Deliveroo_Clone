@@ -11,7 +11,7 @@
                 <h5 class="card-title">{{ dish.name }}</h5>
                 <p class="card-text">{{ dish.description }}</p>
                 <p class="card-text">${{ dish.price }}</p>
-                <button class="btn btn-primary">Add to card</button>
+                <button class="btn btn-primary" @click="addToCard(dish)">Add to card</button>
               </div>
             </div>
           </div>
@@ -20,7 +20,20 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Card</h4>
+              <p class="card-text">{{ numberOfItems }} items selected: </p>
+              <ul>
+                <li class="card-text mb-2" v-for="dish in selectedDishes" :key="dish.id">
+                  Name: {{ dish.name }} (${{ dish.price }}) ({{ dish.quantity }})
+                  <button class="btn btn-sm btn-success" @click="addToCard(dish)">+</button>
+                  <button class="btn btn-sm btn-warning ml-2" @click="removeFromCard(dish)">-</button>
+                </li>
+              </ul>
             </div>
+            <h5 class="card-text">
+              Total: ${{ price }}
+            </h5>
+            <p v-if="!selectedDishes.length">Please select some items.</p>
+            <button :disabled="!selectedDishes.length" class="btn btn-primary">Order</button>
           </div>
         </div>
       </div>
@@ -30,11 +43,17 @@
 
 <script>
 import Strapi from 'strapi-sdk-javascript/build/main';
+import { mapMutations } from 'vuex';
 
 const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
 export default {
+  data() {
+    return {
+      complete: false
+    }
+  },
   computed: {
     id() {
       return this.$route.params.id;
@@ -42,6 +61,15 @@ export default {
     dishes() {
       return this.$store.getters['dishes/list'];
     },
+    selectedDishes() {
+      return this.$store.getters['card/items'];
+    },
+    price() {
+      return this.$store.getters['card/price'];
+    },
+    numberOfItems() {
+      return this.$store.getters['card/numberOfItems'];
+    }
   },
   async fetch({ store, params }) {
     store.commit('dishes/emptyList');
@@ -75,5 +103,12 @@ export default {
       });
     });
   },
+  methods: {
+    ...mapMutations({
+      addToCard: 'card/add',
+      removeFromCard: 'card/remove',
+      emptyCard: 'card/emptyList'
+    })
+  }
 };
 </script>
