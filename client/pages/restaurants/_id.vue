@@ -33,7 +33,7 @@
               Total: ${{ price }}
             </h5>
             <p v-if="!selectedDishes.length">Please select some items.</p>
-            <button :disabled="!selectedDishes.length" class="btn btn-primary">Order</button>
+            <button :disabled="!selectedDishes.length" class="btn btn-primary" @click="goToCheckout">Order</button>
           </div>
         </div>
       </div>
@@ -108,7 +108,15 @@ export default {
       addToCard: 'card/add',
       removeFromCard: 'card/remove',
       emptyCard: 'card/emptyList'
-    })
+    }),
+    goToCheckout() {
+      const isConnected = this.$store.getters['auth/username'];
+      if(!isConnected) {
+        this.$router.push('/signin');
+        return;
+      }
+      this.$router.push('/checkout');
+    }
   }
 };
 </script>

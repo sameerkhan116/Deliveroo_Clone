@@ -6,7 +6,7 @@
         <ul class="navbar-nav">
           <li v-if="username">
             <a href="#" class="nav-link">
-              Hello ({ username })
+              Hello {{ username }}
             </a>
           </li>
           <li v-if="username">
